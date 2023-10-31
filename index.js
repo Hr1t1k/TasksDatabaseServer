@@ -11,7 +11,8 @@ import findOrCreate from "mongoose-findorcreate";
 
 const app=express();
 //Server will run on http://localhost:4000
-const port=4000;
+const port = process.env.PORT || 3030;
+
 var currUser;
 
 //To tap into the reqest body.
