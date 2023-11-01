@@ -160,14 +160,16 @@ app.post("/deleteList",async(req,res)=>{
 
 //Rename list
 app.post("/renameList",async(req,res)=>{
-  const oldName=req.body.listName;
+  const listId=req.body.listId;
   const newName=req.body.newListName;
+  const id=req.body.username
     const user=await User.findOneAndUpdate(
-      {_id:req.user.id,"lists.name":oldName},
+      {_id:id,"lists._d":listId},
       {$set:{"lists.$.name":newName}},
       options,
-    ).exec();
-    res.json(user);
+    ).exec().then(user=>{
+        res.json(user.lists);
+    });
 })
 
 
