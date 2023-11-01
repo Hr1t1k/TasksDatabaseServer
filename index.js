@@ -164,7 +164,7 @@ app.post("/renameList",async(req,res)=>{
   const newName=req.body.newListName;
   const id=req.body.username
     const user=await User.findOneAndUpdate(
-      {_id:id,"lists._d":listId},
+      {_id:id,"lists._id":listId},
       {$set:{"lists.$.name":newName}},
       options,
     ).exec().then(user=>{
