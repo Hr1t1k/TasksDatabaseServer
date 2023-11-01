@@ -133,15 +133,15 @@ app.post("/",async (req,res)=>{
 //Add new List to DB.
 app.post('/addList',async(req,res)=>{
   const newListName=req.body.listName;
-  await User.findById(req.body.username).then(async(user)=>{
-      console.log(user);
-      user.lists.push(new Lists({name:newListName,tasks:defaultItems}));
-      await user.save();
-      const result=user.lists.map(list=>{return {name:list.name,id:list._id}});
-      res.json(result);
+  await User.findOneAndUpdate(
+    {_id:id},
+    {$push:{"lists":new Lists({name:newListName,tasks:defaultItems})}},
+    options
+  ).then(user=>{
+      res.json(user.lists);
   }).catch(error=>{
     console.log(error);
-  })
+  });
       
 })
 
