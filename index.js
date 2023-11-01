@@ -210,8 +210,10 @@ app.post("/getUserWithEmail",(req,res)=>{
 
 app.post("/getTasks",(req,res)=>{
     User.findById(req.body.username).then(user=>{
-      const list = user.lists.find((list) => list._id.equals(req.body.list));
-      res.json(list.tasks);
+      const list = user.lists.find((list) => list._id.equals(req.body.list)).then(list=>{
+        res.json(list.tasks);
+      });
+      
     })
 })
 //Add new task
