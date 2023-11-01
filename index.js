@@ -171,31 +171,22 @@ app.post("/renameList",async(req,res)=>{
 
 //Delete a task
 app.post("/deleteTask",async(req,res)=>{
-  const listId=req.body.listId;
+  const listId=req.body.list;
   const taskId=req.body.taskId;
   const userId=req.body.username;
   console.log("entered deleted");
+  console.log(listId,taskId,userId);
     const user=await User.findOneAndUpdate(
       {_id:userId,"lists._id":listId},
       {$pull:{"lists.$.tasks":{_id:taskId}}},
       options
     ).exec();
+    console.log(user);
     res.redirect(307,"/getTasks")
 })
 
 app.post("/getUserWithEmail",(req,res)=>{
   console.log(req.body.username);
-  // admin.auth()
-  // .getUserByEmail(req.body.username)
-  // .then((userRecord) => {
-  //   // See the UserRecord reference doc for the contents of userRecord.
-  //   console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-  //   res.status(200).json("User exist");
-  // })
-  // .catch((error) => {
-  //   console.log('Error fetching user data:', error);
-  //   res.status(400).json("user Not found");
-  // });
     User.findOne({email:req.body.username}).then(user=>{
       if(user){
         console.log("found");
