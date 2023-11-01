@@ -148,12 +148,14 @@ app.post('/addList',async(req,res)=>{
 
 //Delete List from DB.
 app.post("/deleteList",async(req,res)=>{
-    const listName=req.body.listName;
+    const listId=req.body.listId;
+    const id=req.body.username;
     const user= await User.findByIdAndUpdate(
-      req.user.id,
-      {$pull:{lists:{name:listName}}}
-    ).exec();
-    res.json(user);
+      id,
+      {$pull:{lists:{_id:listId}}},options
+    ).exec().then(user=>{
+        res.json(user.lists);
+    });
  })
 
 //Rename list
