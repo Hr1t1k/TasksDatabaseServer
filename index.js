@@ -174,15 +174,14 @@ app.post("/deleteTask",async(req,res)=>{
   const listId=req.body.list;
   const taskId=req.body.taskId;
   const userId=req.body.username;
-  console.log("entered deleted");
-  console.log(listId,taskId,userId);
     const user=await User.findOneAndUpdate(
       {_id:userId,"lists._id":listId},
       {$pull:{"lists.$.tasks":{_id:taskId}}},
       options
-    ).exec();
-    console.log(user);
-    res.redirect(307,"/getTasks")
+    ).exec().then(user=>{
+      const list = user.lists.find((list) => list._id.equals(req.body.list));
+      res.json(list.tasks);
+    });
 })
 
 app.post("/getUserWithEmail",(req,res)=>{
@@ -202,7 +201,6 @@ app.post("/getUserWithEmail",(req,res)=>{
 app.post("/getTasks",async(req,res)=>{
     await User.findById(req.body.username).then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
-      console.log(list);
       res.json(list.tasks);
     })
 })
