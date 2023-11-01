@@ -171,14 +171,15 @@ app.post("/renameList",async(req,res)=>{
 
 //Delete a task
 app.post("/deleteTask",async(req,res)=>{
-  const listName=req.body.listName;
+  const listId=req.body.listId;
   const taskId=req.body.taskId;
+  const userId=req.body.username;
     const user=await User.findOneAndUpdate(
-      {_id:req.user.id,"lists.name":listName},
+      {_id:userId,"lists._id":listId},
       {$pull:{"lists.$.tasks":{_id:taskId}}},
       options
     ).exec();
-    res.json(user);
+    res.redirect(307,"/getTasks")
 })
 
 app.post("/getUserWithEmail",(req,res)=>{
