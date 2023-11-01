@@ -133,6 +133,7 @@ app.post("/",async (req,res)=>{
 //Add new List to DB.
 app.post('/addList',async(req,res)=>{
   const newListName=req.body.listName;
+  const id=req.body.username
   await User.findOneAndUpdate(
     {_id:id},
     {$push:{"lists":new Lists({name:newListName,tasks:defaultItems})}},
@@ -154,6 +155,7 @@ app.post("/deleteList",async(req,res)=>{
       id,
       {$pull:{lists:{_id:listId}}},options
     ).exec().then(user=>{
+        console.log(user.lists);
         res.json(user.lists);
     }).catch(error=>console.log(error));
  })
@@ -207,8 +209,8 @@ app.post("/getTasks",async(req,res)=>{
   console.log(req.body.username,req.body.list);
     await User.findById(req.body.username).then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
-      res.json(list.tasks);
-    }).catch(error=>console.log(error));
+      if(list)res.json(list.tasks);
+    })  .catch(error=>console.log(error));
 })
 //Add new task
 app.post("/addTask",async(req,res)=>{
