@@ -200,6 +200,7 @@ app.post("/getUserWithEmail",(req,res)=>{
 })
 
 app.post("/getTasks",async(req,res)=>{
+  console.log(req.body.username,req.body.list);
     await User.findById(req.body.username).then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
       res.json(list.tasks);
