@@ -133,17 +133,18 @@ app.post("/",async (req,res)=>{
 //Add new List to DB.
 app.post('/addList',async(req,res)=>{
   const newListName=req.body.listName;
-    const user=await User.findById(req.body.id).exec();
-    const list=await User.findOne({id:req.body.id,"list.name":newListName}).exec();
-    if(list) {
-      res.status(400).json("List already exist.");
-    }else{
+  await User.findById(req.body.username).then(user=>{
       console.log(user);
       user.lists.push(new Lists({name:newListName,tasks:defaultItems}));
       user.save();
-      res.json(user);
-    }
+      const result=user.lists.map(list=>{return {name:list.name,id:list._id}});
+      res.json(result);
+  }).catch(error=>{
+    console.log(error);
+  })
+      
 })
+
 
 //Delete List from DB.
 app.post("/deleteList",async(req,res)=>{
