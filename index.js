@@ -155,7 +155,7 @@ app.post("/deleteList",async(req,res)=>{
       {$pull:{lists:{_id:listId}}},options
     ).exec().then(user=>{
         res.json(user.lists);
-    });
+    }).catch(error=>console.log(error));
  })
 
 //Rename list
@@ -169,7 +169,7 @@ app.post("/renameList",async(req,res)=>{
       options,
     ).exec().then(user=>{
         res.json(user.lists);
-    });
+    }).catch(error=>console.log(error));
 })
 
 
@@ -186,7 +186,7 @@ app.post("/deleteTask",async(req,res)=>{
     ).exec().then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
       res.json(list.tasks);
-    });
+    }).catch(error=>console.log(error));
 })
 
 app.post("/getUserWithEmail",(req,res)=>{
@@ -208,7 +208,7 @@ app.post("/getTasks",async(req,res)=>{
     await User.findById(req.body.username).then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
       res.json(list.tasks);
-    })
+    }).catch(error=>console.log(error));
 })
 //Add new task
 app.post("/addTask",async(req,res)=>{
