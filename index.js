@@ -133,8 +133,8 @@ app.post("/",async (req,res)=>{
 //Add new List to DB.
 app.post('/addList',async(req,res)=>{
   const newListName=req.body.listName;
-    const user=await User.findById(req.user.id).exec();
-    const list=await User.findOne({id:req.user.id,"list.name":newListName}).exec();
+    const user=await User.findById(req.body.id).exec();
+    const list=await User.findOne({id:req.body.id,"list.name":newListName}).exec();
     if(list) {
       res.status(400).json("List already exist.");
     }else{
