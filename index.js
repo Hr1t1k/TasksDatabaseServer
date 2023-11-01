@@ -174,6 +174,7 @@ app.post("/deleteTask",async(req,res)=>{
   const listId=req.body.listId;
   const taskId=req.body.taskId;
   const userId=req.body.username;
+  console.log("entered deleted");
     const user=await User.findOneAndUpdate(
       {_id:userId,"lists._id":listId},
       {$pull:{"lists.$.tasks":{_id:taskId}}},
