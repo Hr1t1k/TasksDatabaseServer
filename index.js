@@ -208,15 +208,11 @@ app.post("/getUserWithEmail",(req,res)=>{
       ).catch(error=> console.log(error));
 })
 
-app.post("/getTasks",async(req,res)=>{
-    User.findById(req.body.username).then(async(user)=>{
-      const list = await user.lists.find((list) =>{ 
-        list._id.equals(req.body.list)
-      }).then(list=>{
-        res.json(list.tasks);
-
-      });
-      
+app.post("/getTasks",(req,res)=>{
+    User.findById(req.body.username).then(user=>{
+      const list = user.lists.find((list) => list._id.equals(req.body.list));
+      console.log(list);
+      res.json(list.tasks);
     })
 })
 //Add new task
