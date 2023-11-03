@@ -214,7 +214,7 @@ app.post("/getTasks",async(req,res)=>{
   console.log(req.body.username,req.body.list);
     await User.findById(req.body.username).then(user=>{
       const list = user.lists.find((list) => list._id.equals(req.body.list));
-      if(list)res.json(list.tasks);
+      if(list)res.json([list.tasks,list.name]);
     })  .catch(error=>console.log(error));
 })
 //Add new task
