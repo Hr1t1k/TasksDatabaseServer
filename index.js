@@ -103,6 +103,7 @@ async function findUserByEmail(username,email){
   try{
   var user= await User.findOne({email:email}).exec()
   if(user){
+    console.log("Dum Dum ");
     return user;
   }else{
     const user=new User({
@@ -114,6 +115,7 @@ async function findUserByEmail(username,email){
     return user;
     } 
   }catch(error){
+      console.log(error);
       return  User.findOne({_id:username}).exec();
     };
 }
@@ -232,7 +234,9 @@ app.post("/addTask",async(req,res)=>{
 app.post("/addUser",async(req,res)=>{
   const email=req.body.username;
   const id=req.body.id;
-  findUserByEmail(email,id);
+  console.log("user registered");
+  const user=findUserByEmail(email,id);
+  console.log("New User",user);
 })
 
 //Get all the lists of user  
