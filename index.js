@@ -82,23 +82,23 @@ const options={returnDocument:"after"};
 //When Email is entered
 
 //IMP:::: NEED TO FIGURE OUT WHAT TO DO WHEN USER IS ALREADY REGISTERED WITH OAUTH
-async function findUser(username){
-  try{
-  var user= await User.findOne({_id:username}).exec()
-  if(user){
-    return user;
-  }else{
-    const user=new User({
-      id:username,
-      lists:defaultList,
-    });
-    await user.save();
-    return user;
-    } 
-  }catch(error){
-      return  User.findOne({_id:username}).exec();
-    };
-}
+// async function findUser(username){
+//   try{
+//   var user= await User.findOne({_id:username}).exec()
+//   if(user){
+//     return user;
+//   }else{
+//     const user=new User({
+//       id:username,
+//       lists:defaultList,
+//     });
+//     await user.save();
+//     return user;
+//     } 
+//   }catch(error){
+//       return  User.findOne({_id:username}).exec();
+//     };
+// }
 async function findUserByEmail(username,email){
   try{
   var user= await User.findOne({email:email}).exec()
@@ -121,9 +121,12 @@ async function findUserByEmail(username,email){
 }
 
 app.post("/",async (req,res)=>{
-    const user= await findUser(req.body.username).then(user=>{
-      const result=user.lists.map(list=>{return {name:list.name,_id:list._id}});
-      res.json(result);
+    console.log(req.body.username);
+    const user= await findById(req.body.username).then(user=>{
+      if(user){
+          const result=user.lists.map(list=>{return {name:list.name,_id:list._id}});
+          res.json(result);
+      }
     }).catch(error=>{
         console.log(error);
     })
