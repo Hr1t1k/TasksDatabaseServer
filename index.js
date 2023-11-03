@@ -107,7 +107,7 @@ async function findUserByEmail(username,email){
     return user;
   }else{
     const user=new User({
-      id:username,
+      _id:username,
       email:email,
       lists:defaultList,
     });
