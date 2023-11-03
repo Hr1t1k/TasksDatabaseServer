@@ -122,7 +122,7 @@ async function findUserByEmail(username,email){
 
 app.post("/",async (req,res)=>{
     console.log(req.body.username);
-    const user= await findById(req.body.username).then(user=>{
+    const user= await User.findById(req.body.username).then(user=>{
       if(user){
           const result=user.lists.map(list=>{return {name:list.name,_id:list._id}});
           res.json(result);
@@ -238,7 +238,7 @@ app.post("/addUser",async(req,res)=>{
   const email=req.body.username;
   const id=req.body.id;
   console.log("user registered");
-  const user=findUserByEmail(email,id);
+  const user=findUserByEmail(id,email);
   console.log("New User",user);
 })
 
