@@ -120,7 +120,7 @@ async function findUserByEmail(username,email){
 
 app.post("/",async (req,res)=>{
     const user= await findUser(req.body.username).then(user=>{
-      const result=user.lists.map(list=>{return {name:list.name,id:list._id}});
+      const result=user.lists.map(list=>{return {name:list.name,_id:list._id}});
       res.json(result);
     }).catch(error=>{
         console.log(error);
