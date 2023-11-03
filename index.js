@@ -100,6 +100,7 @@ const options={returnDocument:"after"};
 //     };
 // }
 async function findUserByEmail(username,email){
+  console.log(username,email);
   try{
   var user= await User.findOne({email:email}).exec()
   if(user){
