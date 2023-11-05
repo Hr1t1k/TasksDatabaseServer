@@ -223,7 +223,8 @@ app.post("/addTask",async(req,res)=>{
   const listId=req.body.list;
   const content=req.body.content;
   const id=req.body.username;
-  const item=new Items({content:content});
+  const taskId =req.body.taskId;
+  const item=new Items({content:content,_id:taskId});
   await User.findOneAndUpdate(
       {_id:id,"lists._id":listId},
       {$push:{"lists.$.tasks":item}},
