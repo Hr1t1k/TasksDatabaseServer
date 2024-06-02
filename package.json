@@ -2,19 +2,32 @@
   "name": "tasksdatabase",
   "version": "1.0.0",
   "description": "database for tasks",
-  "type": "module",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "firebase deploy --only functions:api"
   },
   "engines": {
-    "node": ">=18.18.0 <19.0.0"
+    "node": "18"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.2",
+    "bluebird": "^3.7.2",
+    "bson-objectid": "^2.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^4.5.0",
+    "ioredis": "^5.4.1",
     "mongoose": "^8.0.0",
-    "mongoose-findorcreate": "^4.0.0"
+    "mongoose-findorcreate": "^4.0.0",
+    "redis": "^4.6.14",
+    "shortid": "^2.2.16",
+    "uuid": "^9.0.1"
   }
 }
