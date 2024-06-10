@@ -94,7 +94,7 @@ const getLists = expressAsyncHandler(async (req, res) => {
           },
         ];
         await Task.insertMany(defaultTasks);
-        setAllLists([newList]);
+        setAllLists(user, [newList]);
         res.status(200).json([newList]);
       } else {
         await setAllLists(user, lists);
@@ -102,7 +102,6 @@ const getLists = expressAsyncHandler(async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
     res.status(400).send(error.message);
   }
 });
